@@ -34,17 +34,14 @@ puts header.center(20)
 puts "日 月 火 水 木 金 土"
 
 # 1日の曜日（0=日, 6=土）に応じてスペースを出力
-start_date.wday.times do
-  print "   "
-end
+print "   " * start_date.wday
 
 # 日付を1日ずつ表示（右揃え2桁 + 半角スペース）
-date = start_date
-while date <= end_date
+(start_date..end_date).each do |date|
   print date.day.to_s.rjust(2) + " "
-  print "\n" if date.wday == 6
+  puts if date.saturday?
   date += 1
 end
 
-puts "" 
+puts 
 
