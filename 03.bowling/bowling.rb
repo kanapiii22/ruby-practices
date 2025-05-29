@@ -22,24 +22,25 @@ def make_frames(shots)
   frames << shots[i..]
 end
 
+# スコア計算
 def calculate_score(frames)
   total = 0
 
   frames.each_with_index do |frame, idx|
-    total += if idx < 9
-               if frame[0] == 10
-                 10 + strike_bonus(frames, idx)
-               elsif frame.sum == 10
-                 10 + spare_bonus(frames, idx)
-               else
-                 frame.sum
-               end
-             else
-               frame.sum
-             end
+    if idx < 9
+      if frame[0] == 10 # ストライク
+        total += 10 + strike_bonus(frames, idx)
+      elsif frame.sum == 10 # スペア
+        total += 10 + spare_bonus(frames, idx)
+      else
+        total += frame.sum
+      end
+    else
+      total += frame.sum
+    end
   end
 
-  total
+  puts total
 end
 
 def strike_bonus(frames, idx)
@@ -56,4 +57,7 @@ def spare_bonus(frames, idx)
   frames[idx + 1][0]
 end
 
-parse_input(ARGV[0])
+shots = parse_input(ARGV[0])
+frames = make_frames(shots)
+score = calculate_score(frames)
+
