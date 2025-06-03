@@ -25,9 +25,9 @@ end
 # スコア計算
 def calculate_score(frames)
   total = 0
-
+  frame_count = 10
   frames.each_with_index do |frame, idx|
-    if idx < 9
+    if idx < frame_count - 1 
       if frame[0] == 10 # ストライク
         total += 10 + strike_bonus(frames, idx)
       elsif frame.sum == 10 # スペア
