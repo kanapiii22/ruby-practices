@@ -23,21 +23,16 @@ def make_frames(shots)
   frames << shots[i..]
 end
 
-# スコア計算
 def calculate_score(frames)
   total = 0
   frames.each_with_index do |frame, idx|
     total += frame.sum
-    total += bonus_for(frame, frames, idx) if idx < FRAME_COUNT - 1
+    if idx < FRAME_COUNT - 1
+      total += strike_bonus(frames, idx) if strike?(frame)
+      total += spare_bonus(frames, idx) if spare?(frame) && !strike?(frame)
+    end
   end
   total
-end
-
-def bonus_for(frame, frames, idx)
-  return strike_bonus(frames, idx) if strike?(frame)
-  return spare_bonus(frames, idx) if spare?(frame)
-
-  0
 end
 
 def strike_bonus(frames, idx)
