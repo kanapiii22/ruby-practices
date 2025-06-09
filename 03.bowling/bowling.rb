@@ -55,7 +55,7 @@ def strike?(frame)
 end
 
 def spare?(frame)
-  frame.size == 2 && frame.sum == ALL_PINS && frame[0] != ALL_PINS
+  frame.size == 2 && frame.sum == ALL_PINS && !strike?(frame)
 end
 
 shots = parse_input(ARGV[0])
