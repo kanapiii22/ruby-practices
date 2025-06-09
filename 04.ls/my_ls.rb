@@ -1,13 +1,10 @@
-# 引数を取得（なければカレントディレクトリ）
-target = ARGV[0] || "."
-
+# frozen_string_literal: true
 FORMAT_COL = 3
 
 # 引数で指定されたディレクトリの内容を取得し、ソートして表示する
 def collect_entries(target)
   Dir.entries(target).reject { |entry| entry.start_with?('.') }.sort
 end
-p collect =  collect_entries(target)
 
 # 3列表示のために縦詰め → 横展開形式の2次元配列を作る
 def format_rows(collect, column_count)
@@ -22,7 +19,6 @@ def format_rows(collect, column_count)
 
  table
 end
-p format = format_rows(collect,FORMAT_COL)
 
 # 最大幅で整形して表示
 def print_rows(rows)
@@ -31,4 +27,8 @@ def print_rows(rows)
     puts row.map { |e| (e || '').ljust(max_width + 2) }.join
   end
 end
+
+target = ARGV[0] || "."
+collect =  collect_entries(target)
+format = format_rows(collect,FORMAT_COL)
 print_rows(format)
