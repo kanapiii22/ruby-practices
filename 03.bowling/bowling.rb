@@ -29,7 +29,7 @@ def calculate_score(frames)
     total += frame.sum
     if idx < FRAME_COUNT - 1
       total += strike_bonus(frames, idx) if strike?(frame)
-      total += spare_bonus(frames, idx) if spare?(frame) && !strike?(frame)
+      total += spare_bonus(frames, idx) if spare?(frame)
     end
   end
   total
@@ -54,7 +54,7 @@ def strike?(frame)
 end
 
 def spare?(frame)
-  frame.size == 2 && frame.sum == 10
+  frame.size == 2 && frame.sum == 10 && frame[0] != 10
 end
 
 shots = parse_input(ARGV[0])
