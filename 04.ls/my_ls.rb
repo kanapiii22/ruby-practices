@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-FORMAT_COL = 3
+COLUMN_COUNT = 3
 
 def collect_entries(target)
   Dir.entries(target).reject { |entry| entry.start_with?('.') }.sort
@@ -29,5 +29,5 @@ end
 
 target = ARGV[0] || '.'
 collect = collect_entries(target)
-format = build_vertical_table(collect, FORMAT_COL)
+format = build_vertical_table(collect, COLUMN_COUNT)
 print_rows(format)
