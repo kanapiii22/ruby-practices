@@ -2,8 +2,9 @@
 # frozen_string_literal: true
 
 FRAME_COUNT = 10
+ALL_PINS = 10
 def parse_input(input)
-  input.split(',').map { |s| s == 'X' ? 10 : s.to_i }
+  input.split(',').map { |s| s == 'X' ? ALL_PINS : s.to_i }
 end
 
 def make_frames(shots)
@@ -11,8 +12,8 @@ def make_frames(shots)
   i = 0
 
   (FRAME_COUNT - 1).times do
-    if shots[i] == 10
-      frames << [10]
+    if shots[i] == ALL_PINS
+      frames << [ALL_PINS]
       i += 1
     else
       frames << [shots[i], shots[i + 1]]
@@ -39,9 +40,9 @@ def strike_bonus(frames, idx)
   next_frame = frames[idx + 1]
 
   if strike?(next_frame) && frames[idx + 2]
-    10 + frames[idx + 2][0]
+    ALL_PINS + frames[idx + 2][0]
   else
-    next_frame[0] + (next_frame[1] || 0)
+    next_frame[0] + (next_frame[1])
   end
 end
 
@@ -50,11 +51,11 @@ def spare_bonus(frames, idx)
 end
 
 def strike?(frame)
-  frame[0] == 10
+  frame[0] == ALL_PINS
 end
 
 def spare?(frame)
-  frame.size == 2 && frame.sum == 10 && frame[0] != 10
+  frame.size == 2 && frame.sum == ALL_PINS && frame[0] != ALL_PINS
 end
 
 shots = parse_input(ARGV[0])
