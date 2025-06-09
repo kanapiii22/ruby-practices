@@ -24,3 +24,11 @@ def format_rows(collect, column_count)
 end
 p format = format_rows(collect,FORMAT_COL)
 
+# 最大幅で整形して表示
+def print_rows(rows)
+  max_width = rows.flatten.compact.map(&:length).max
+  rows.each do |row|
+    puts row.map { |e| (e || '').ljust(max_width + 2) }.join
+  end
+end
+print_rows(format)
