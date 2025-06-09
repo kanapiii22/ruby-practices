@@ -9,14 +9,18 @@ def collect_entries(target)
 end
 p collect =  collect_entries(target)
 
-# 配列を3列に変換
+# 3列表示のために縦詰め → 横展開形式の2次元配列を作る
 def format_rows(collect, column_count)
-  columns = Array.new(column_count) { [] }
+ row_count = (collect.size.to_f / column_count).ceil
+ table = Array.new(row_count) { Array.new(column_count) }
 
-  collect.each_with_index do |entry, index|
-  col = index % column_count
-  columns[col] << entry  # 各列に順番に詰める
-  end
-  columns
+ collect.each_with_index do |entry, i|
+   row = i % row_count
+   col = i / row_count
+   table[row][col] = entry
+ end
+
+ table
 end
 p format = format_rows(collect,FORMAT_COL)
+
