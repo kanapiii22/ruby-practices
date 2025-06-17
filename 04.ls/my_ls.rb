@@ -8,11 +8,11 @@ def collect_entries(target)
 end
 
 # 3列表示のために縦詰め → 横展開形式の2次元配列を作る
-def build_vertical_table(collect, column_count)
-  row_count = (collect.size.to_f / column_count).ceil
+def build_vertical_table(entries, column_count)
+  row_count = (entries.size.to_f / column_count).ceil
   table = Array.new(row_count) { Array.new(column_count) }
 
-  collect.each_with_index do |entry, i|
+  entries.each_with_index do |entry, i|
     row = i % row_count
     col = i / row_count
     table[row][col] = entry
@@ -29,6 +29,6 @@ def print_rows(rows)
 end
 
 target = ARGV[0] || '.'
-collect = collect_entries(target)
+entries = collect_entries(target)
 format = build_vertical_table(collect, COLUMN_COUNT)
 print_rows(format)
