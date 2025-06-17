@@ -30,5 +30,5 @@ end
 
 target = ARGV[0] || '.'
 entries = collect_entries(target)
-format = build_vertical_table(collect, COLUMN_COUNT)
-print_rows(format)
+entry_table = build_vertical_table(entries, COLUMN_COUNT)
+print_rows(entry_table)
