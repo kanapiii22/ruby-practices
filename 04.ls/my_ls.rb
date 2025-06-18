@@ -1,7 +1,14 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
+require 'optparse'
+
 COLUMN_COUNT = 3
+show_all = false
+
+opt = OptionParser.new
+opt.on('-a') { show_all = true }
+opt.parse!(ARGV)
 
 def collect_entries(target)
   Dir.entries(target).reject { |entry| entry.start_with?('.') }.sort
