@@ -10,8 +10,10 @@ opt = OptionParser.new
 opt.on('-a') { show_all = true }
 opt.parse!(ARGV)
 
-def collect_entries(target)
-  Dir.entries(target).reject { |entry| entry.start_with?('.') }.sort
+def collect_entries(target, show_all)
+  entries = Dir.entries(target)
+  entries.reject! { |entry| entry.start_with?('.') } unless show_all
+  entries.sort
 end
 
 # 3列表示のために縦詰め → 横展開形式の2次元配列を作る
@@ -36,6 +38,6 @@ def print_rows(rows)
 end
 
 target = ARGV[0] || '.'
-entries = collect_entries(target)
+entries = collect_entries(target, show_all)
 entry_table = build_vertical_table(entries, COLUMN_COUNT)
 print_rows(entry_table)
