@@ -20,6 +20,28 @@ def collect_entries(target, show_all)
   entries.sort
 end
 
+def format_mode(mode)
+  type = case mode & 0o170000
+         when 0o040000 then 'd'
+         when 0o120000 then 'l'
+         when 0o100000 then '-'
+         else '?'
+         end
+
+  # パーミッション（各3ビットごと）
+  perms = (0..2).map do |i|
+    shift = 6 - i * 3
+    bits = (mode >> shift) & 0b111
+    [
+      bits & 0b100 != 0 ? 'r' : '-',
+      bits & 0b010 != 0 ? 'w' : '-',
+      bits & 0b001 != 0 ? 'x' : '-'
+    ].join
+  end.join
+
+  type + perms
+end
+
 
 # 3列表示のために縦詰め → 横展開形式の2次元配列を作る
 def build_vertical_table(entries, column_count)
@@ -31,7 +53,6 @@ def build_vertical_table(entries, column_count)
     col = i / row_count
     table[row][col] = entry
   end
-
   table
 end
 
@@ -47,3 +68,6 @@ entries = collect_entries(target, show_all)
 entries = entries.reverse if reverse_order
 entry_table = build_vertical_table(entries, COLUMN_COUNT)
 print_rows(entry_table)
+
+fs = File::Stat.new($0)
+puts format_mode(fs.mode)
