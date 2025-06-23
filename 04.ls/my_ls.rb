@@ -42,6 +42,15 @@ def format_mode(mode)
   type + perms
 end
 
+def display_file_info(path)
+  stat = File::Stat.new($0)
+  nlink    = stat.nlink
+  size     = stat.size
+  mtime    = stat.mtime
+
+  puts "#{nlink} #{size.to_s.rjust(6)} #{mtime}"
+end
+
 
 # 3列表示のために縦詰め → 横展開形式の2次元配列を作る
 def build_vertical_table(entries, column_count)
@@ -70,4 +79,6 @@ entry_table = build_vertical_table(entries, COLUMN_COUNT)
 print_rows(entry_table)
 
 fs = File::Stat.new($0)
+p fs
 puts format_mode(fs.mode)
+display_file_info(fs)
