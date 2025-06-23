@@ -5,9 +5,11 @@ require 'optparse'
 
 COLUMN_COUNT = 3
 show_all = false
+reverse_order = false
 
 opt = OptionParser.new
 opt.on('-a') { show_all = true }
+opt.on('-r') { reverse_order = true }
 opt.parse!(ARGV)
 
 def collect_entries(target, show_all)
@@ -15,6 +17,7 @@ def collect_entries(target, show_all)
   entries.reject! { |entry| entry.start_with?('.') } unless show_all
   entries.sort
 end
+
 
 # 3列表示のために縦詰め → 横展開形式の2次元配列を作る
 def build_vertical_table(entries, column_count)
@@ -39,5 +42,6 @@ end
 
 target = ARGV[0] || '.'
 entries = collect_entries(target, show_all)
+entries = entries.reverse if reverse_order
 entry_table = build_vertical_table(entries, COLUMN_COUNT)
 print_rows(entry_table)
