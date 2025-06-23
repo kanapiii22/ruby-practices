@@ -44,14 +44,16 @@ def format_mode(mode)
 end
 
 def display_file_info(path)
-  stat = File::Stat.new($0)
+  stat = File.lstat(path)
+  mode = format_mode(stat.mode)
   nlink    = stat.nlink
   owner    = Etc.getpwuid(stat.uid).name
   group    = Etc.getgrgid(stat.gid).name
   size     = stat.size
   mtime    = stat.mtime.strftime('%-m %e %H:%M')
+  filename = File.basename(path)
 
-  puts "#{nlink} #{size} #{owner} #{group} #{mtime}"
+  puts "#{mode} #{nlink} #{owner} #{group} #{size} #{mtime} #{filename}"
 end
 
 
@@ -78,10 +80,12 @@ end
 target = ARGV[0] || '.'
 entries = collect_entries(target, show_all)
 entries = entries.reverse if reverse_order
-entry_table = build_vertical_table(entries, COLUMN_COUNT)
-print_rows(entry_table)
 
-fs = File::Stat.new($0)
-p fs
-puts format_mode(fs.mode)
-display_file_info(fs)
+if long_format
+  path = File.join(target, entries)
+  display_file_info(path)
+else
+  table = build_vertical_table(entries, COLUMN_COUNT)
+  print_rows(table)
+end
+
