@@ -18,9 +18,6 @@ def collect_entries(target, show_all)
   entries.sort
 end
 
-def entries_reverse(entries)
-  entries.reverse
-end
 
 # 3列表示のために縦詰め → 横展開形式の2次元配列を作る
 def build_vertical_table(entries, column_count)
@@ -45,6 +42,6 @@ end
 
 target = ARGV[0] || '.'
 entries = collect_entries(target, show_all)
-entries = entries_reverse(entries) if reverse_order
+entries = entries.reverse if reverse_order
 entry_table = build_vertical_table(entries, COLUMN_COUNT)
 print_rows(entry_table)
