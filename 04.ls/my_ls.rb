@@ -46,9 +46,9 @@ def display_file_info(path)
   stat = File::Stat.new($0)
   nlink    = stat.nlink
   size     = stat.size
-  mtime    = stat.mtime
+  mtime    = stat.mtime.strftime('%-m %e %H:%M')
 
-  puts "#{nlink} #{size.to_s.rjust(6)} #{mtime}"
+  puts "#{nlink} #{size} #{mtime}"
 end
 
 
