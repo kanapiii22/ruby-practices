@@ -6,10 +6,12 @@ require 'optparse'
 COLUMN_COUNT = 3
 show_all = false
 reverse_order = false
+long_format = false
 
 opt = OptionParser.new
 opt.on('-a') { show_all = true }
 opt.on('-r') { reverse_order = true }
+opt.on('-l') { long_format = true }
 opt.parse!(ARGV)
 
 def collect_entries(target, show_all)
