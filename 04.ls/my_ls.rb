@@ -2,6 +2,7 @@
 # frozen_string_literal: true
 
 require 'optparse'
+require 'etc'
 
 COLUMN_COUNT = 3
 show_all = false
@@ -45,10 +46,12 @@ end
 def display_file_info(path)
   stat = File::Stat.new($0)
   nlink    = stat.nlink
+  owner    = Etc.getpwuid(stat.uid).name
+  group    = Etc.getgrgid(stat.gid).name
   size     = stat.size
   mtime    = stat.mtime.strftime('%-m %e %H:%M')
 
-  puts "#{nlink} #{size} #{mtime}"
+  puts "#{nlink} #{size} #{owner} #{group} #{mtime}"
 end
 
 
