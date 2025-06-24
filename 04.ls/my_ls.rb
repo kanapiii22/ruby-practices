@@ -53,7 +53,7 @@ def display_file_info(path)
   mtime    = stat.mtime.strftime('%-m %e %H:%M')
   filename = File.basename(path)
 
-  puts "#{mode} #{nlink} #{owner} #{group} #{size} #{mtime} #{filename}"
+  puts "#{mode} #{nlink} #{owner} #{group} #{size.to_s.rjust(4)} #{mtime} #{filename}"
 end
 
 
@@ -82,8 +82,10 @@ entries = collect_entries(target, show_all)
 entries = entries.reverse if reverse_order
 
 if long_format
-  path = File.join(target, entries)
-  display_file_info(path)
+  entries.each do |entry|
+    path = File.join(target, entry)
+    display_file_info(path)
+  end
 else
   table = build_vertical_table(entries, COLUMN_COUNT)
   print_rows(table)
