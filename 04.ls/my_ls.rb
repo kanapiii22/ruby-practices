@@ -56,7 +56,6 @@ def display_file_info(path)
   puts "#{mode} #{nlink} #{owner} #{group} #{size.to_s.rjust(4)} #{mtime} #{filename}"
 end
 
-
 # 3列表示のために縦詰め → 横展開形式の2次元配列を作る
 def build_vertical_table(entries, column_count)
   row_count = (entries.size.to_f / column_count).ceil
@@ -90,4 +89,3 @@ else
   table = build_vertical_table(entries, COLUMN_COUNT)
   print_rows(table)
 end
-
